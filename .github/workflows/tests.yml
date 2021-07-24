@@ -1,0 +1,33 @@
+name: Otus project tests
+
+on:
+  push:
+    # branches:
+    #   - v*
+
+env:
+  GO111MODULE: "on"
+
+jobs:
+  tests_by_makefile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ^1.16
+
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: make lint
+        run: make lint
+        working-directory: project_rotation
+
+      - name: make build
+        run: make build
+        working-directory: project_rotation
+
+      - name: make test
+        run: make test
+        working-directory: project_rotation
