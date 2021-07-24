@@ -1,0 +1,6 @@
+logger:
+  level : "info"  # you can set: error / warn / info / debug
+  file : "../../logs/test.log"
+
+storage:
+  connStr : "user=someuser dbname=rotationdb sslmode=disable"

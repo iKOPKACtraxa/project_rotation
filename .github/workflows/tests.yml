@@ -19,15 +19,12 @@ jobs:
 
       - name: Check out code
         uses: actions/checkout@v2
-
+      
       - name: make lint
         run: make lint
-        working-directory: project_rotation
 
       - name: make build
         run: make build
-        working-directory: project_rotation
 
       - name: make test
         run: make test
-        working-directory: project_rotation
