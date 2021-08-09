@@ -13,10 +13,10 @@ type Zap struct {
 }
 
 type Logger interface {
-	Debug(msg string)
-	Info(msg string)
-	Warn(msg string)
-	Error(msg string)
+	Debug(args ...interface{})
+	Info(args ...interface{})
+	Warn(args ...interface{})
+	Error(args ...interface{})
 }
 
 const (
@@ -49,25 +49,25 @@ func New(logfile, level string) *Zap {
 }
 
 // Debug make a message in logger at Debug-level.
-func (l Zap) Debug(msg string) {
-	l.logger.Debug(msg)
-	fmt.Println(msg)
+func (l Zap) Debug(args ...interface{}) {
+	l.logger.Debug(args)
+	fmt.Println(args...)
 }
 
 // Info make a message in logger at Info-level.
-func (l Zap) Info(msg string) {
-	l.logger.Info(msg)
-	fmt.Println(msg)
+func (l Zap) Info(args ...interface{}) {
+	l.logger.Info(args)
+	fmt.Println(args...)
 }
 
 // Warn make a message in logger at Warn-level.
-func (l Zap) Warn(msg string) {
-	l.logger.Warn(msg)
-	fmt.Println(msg)
+func (l Zap) Warn(args ...interface{}) {
+	l.logger.Warn(args)
+	fmt.Println(args...)
 }
 
 // Error make a message in logger at Error-level.
-func (l Zap) Error(msg string) {
-	l.logger.Error(msg)
-	fmt.Println(msg)
+func (l Zap) Error(args ...interface{}) {
+	l.logger.Error(args)
+	fmt.Println(args...)
 }

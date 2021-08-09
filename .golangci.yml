@@ -25,22 +25,24 @@ linters:
     - godot
     - gofmt
     - goheader
-    - golint
+    # - golint
+    - revive
     - gomodguard
     - goprintffuncname
     - gosec
     - gosimple
     - govet
     - ineffassign
-    - interfacer
-    - maligned
+    # - interfacer
+    # - maligned
     - misspell
     - nestif
     - noctx
     - nolintlint
     - prealloc
     - rowserrcheck
-    - scopelint
+    # - scopelint
+    - exportloopref
     - sqlclosecheck
     - staticcheck
     - structcheck

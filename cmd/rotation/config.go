@@ -7,18 +7,22 @@ import (
 )
 
 type Config struct {
-	Logger  LoggerConf
-	Storage StorageConf
-	// Slots   app.Slots `toml:"slots"` //удалить
+	Logger     LoggerConf
+	Storage    StorageConf
+	GRPCServer GRPCServerConf
 }
 
 type LoggerConf struct {
-	File  string `toml:"logger.file"`
-	Level string `toml:"logger.level"`
+	File  string `yaml:"logger.file"`
+	Level string `yaml:"logger.level"`
 }
 
 type StorageConf struct {
-	ConnStr string `toml:"storage.connStr"`
+	ConnStr string `yaml:"storage.connStr"`
+}
+
+type GRPCServerConf struct {
+	HostPort string `yaml:"GRPCServer.hostPort"`
 }
 
 // NewConfig make a config from configFilePath.

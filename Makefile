@@ -8,7 +8,7 @@ build:
 	go build -v -o $(BIN) -ldflags "$(LDFLAGS)" ./cmd/rotation
 
 run: build
-	$(BIN) -config ./configs/config.toml
+	$(BIN) -config ./configs/config.yaml
 
 build-img:
 	docker build \
@@ -41,4 +41,12 @@ unmigrate:
 	psql -p 5432 -h localhost -U postgres -c "DROP DATABASE rotationdb"
 	psql -p 5432 -h localhost -U postgres -c "DROP USER someuser"
 
-.PHONY: build run build-img run-img version test lint migrate unmigrate
+generate:
+	rm -rf internal/pb
+	mkdir -p internal/pb
+	protoc --proto_path=api/ --go_out=internal/pb --go-grpc_out=internal/pb api/*.proto
+
+evans:
+	evans --proto api/rotation.proto repl
+
+.PHONY: build run build-img run-img version test lint migrate unmigrate generate evans
