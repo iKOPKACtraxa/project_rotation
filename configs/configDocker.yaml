@@ -3,13 +3,13 @@ logger:
   file : "./logs/test.log"
 
 storage:
-  connStr : "user=someuser dbname=rotationdb sslmode=disable"
-  
+  connStr : "host=db user=someuser password=1234 dbname=rotationdb sslmode=disable"
+
 GRPCServer:
   hostPort : ":50051"
 
 MQ:
-  uri : "amqp://guest:guest@localhost:5672/"
+  uri : "amqp://guest:guest@mq:5672/"
   exchange : "test-exchange"
   reliable : true
   routingKey : "test-key"

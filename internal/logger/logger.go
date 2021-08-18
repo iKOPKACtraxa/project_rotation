@@ -23,7 +23,7 @@ const (
 	debug      = "debug"
 	info       = "info"
 	warn       = "warn"
-	errorlevel = "error"
+	errorlevel = "errorlevel"
 )
 
 // New returns a new Logger object.

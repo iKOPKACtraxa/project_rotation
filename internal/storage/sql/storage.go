@@ -210,9 +210,9 @@ func (s *StorageInDB) BannerSelection(ctx context.Context, slotID, socGroupID st
 	if err != nil {
 		err = tx.Rollback()
 		if err != nil {
-			s.logg.Error("rollback is not complete wit err:", err)
+			s.logg.Error("rollback is not complete with err:", err)
 		}
-		return 0, fmt.Errorf("ClicksIncreasing has got an error: %w", err)
+		return 0, fmt.Errorf("increasing of impressions has got an error: %w", err)
 	}
 	err = tx.Commit()
 	if err != nil {

@@ -10,6 +10,7 @@ type Config struct {
 	Logger     LoggerConf
 	Storage    StorageConf
 	GRPCServer GRPCServerConf
+	MQ         MQConf
 }
 
 type LoggerConf struct {
@@ -23,6 +24,13 @@ type StorageConf struct {
 
 type GRPCServerConf struct {
 	HostPort string `yaml:"GRPCServer.hostPort"`
+}
+
+type MQConf struct {
+	URI        string `yaml:"MQ.uri"`
+	Exchange   string `yaml:"MQ.exchange"`
+	Reliable   bool   `yaml:"MQ.reliable"`
+	RoutingKey string `yaml:"MQ.routingKey"`
 }
 
 // NewConfig make a config from configFilePath.

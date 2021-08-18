@@ -14,7 +14,7 @@ build-img:
 	docker build \
 		--build-arg=LDFLAGS="$(LDFLAGS)" \
 		-t $(DOCKER_IMG) \
-		-f build/Dockerfile .
+		-f Dockerfile .
 
 run-img: build-img
 	docker run $(DOCKER_IMG)
@@ -32,14 +32,25 @@ install-lint-deps:
 lint: install-lint-deps
 	golangci-lint run ./...
 
-migrate:
-	psql -p 5432 -h localhost -U postgres -c "CREATE USER someuser"
-	psql -p 5432 -h localhost -U postgres -c "CREATE DATABASE rotationdb"
-	goose -dir migrations postgres "user=someuser dbname=rotationdb sslmode=disable" up
-unmigrate: 
+localon:
+	docker run -d --name rb -p 15672:15672 -p 5672:5672 rabbitmq:3-management
+	pg_ctl start -D '/Users/vladimirastrakhantsev/Library/Application Support/Postgres/var-13'
+	psql -p 5432 -U postgres -c "CREATE USER someuser"
+	psql -p 5432 -U postgres -c "CREATE DATABASE rotationdb"
+	goose -dir migrations postgres "host=localhost user=someuser dbname=rotationdb sslmode=disable" up
+
+localoff:
 	goose -dir migrations postgres "user=someuser dbname=rotationdb sslmode=disable" down
-	psql -p 5432 -h localhost -U postgres -c "DROP DATABASE rotationdb"
-	psql -p 5432 -h localhost -U postgres -c "DROP USER someuser"
+	psql -p 5432 -U postgres -c "DROP DATABASE rotationdb"
+	psql -p 5432 -U postgres -c "DROP USER someuser"
+	pg_ctl stop -D '/Users/vladimirastrakhantsev/Library/Application Support/Postgres/var-13'
+	docker stop rb
+	docker rm rb
+
+migrate:
+	PGPASSWORD=1234 psql -h db -p 5432 -U postgres -c "CREATE USER someuser WITH PASSWORD '1234'"
+	PGPASSWORD=1234 psql -h db -p 5432 -U postgres -c "CREATE DATABASE rotationdb"
+	goose -dir migrations postgres "host=db user=someuser password=1234 dbname=rotationdb sslmode=disable" up
 
 generate:
 	rm -rf internal/pb
@@ -49,4 +60,10 @@ generate:
 evans:
 	evans --proto api/rotation.proto repl
 
-.PHONY: build run build-img run-img version test lint migrate unmigrate generate evans
+up:
+	docker compose up -d --build
+
+down:
+	docker compose down
+
+.PHONY: build run build-img run-img version test lint migrate generate evans db

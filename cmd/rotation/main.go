@@ -38,7 +38,7 @@ func main() {
 		logg.Error("at sql storage creating has got an error:", err)
 	}
 
-	rotation := app.New(logg, storage)
+	rotation := app.New(ctx, logg, storage, config.MQ.URI, config.MQ.Exchange, config.MQ.RoutingKey, config.MQ.Reliable)
 
 	err = grpcserver.Serve(ctx, rotation, config.GRPCServer.HostPort)
 	if err != nil {

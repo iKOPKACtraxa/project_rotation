@@ -24,7 +24,7 @@ func newService(rotation *app.App) *Service {
 
 //
 func (s *Service) AddBanner(ctx context.Context, req *pb.AddBannerRequest) (*pb.AddBannerResponse, error) {
-	err := s.rotation.AddBanner(ctx, storage.ID(req.BannerID), storage.ID(req.SlotID)) // todo это другой контекст? GRPC его предоставил? А ctx из main уже тут не нужен?
+	err := s.rotation.AddBanner(ctx, storage.ID(req.BannerID), storage.ID(req.SlotID))
 	if err != nil {
 		return nil, err
 	}
