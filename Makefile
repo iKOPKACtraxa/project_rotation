@@ -66,4 +66,4 @@ up:
 down:
 	docker compose down
 
-.PHONY: build run build-img run-img version test lint migrate generate evans db
+.PHONY: build run build-img run-img version test lint migrate generate evans up down

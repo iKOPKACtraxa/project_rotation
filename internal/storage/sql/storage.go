@@ -199,19 +199,15 @@ func (s *StorageInDB) BannerSelection(ctx context.Context, slotID, socGroupID st
 	selectedBanner, err := multiarmedbandit.Select(ctx, tx, socGroupID)
 	if err != nil {
 		err = tx.Rollback()
-		if err != nil {
-			s.logg.Error("rollback is not complete wit err:", err)
-		}
+		s.logg.Error("rollback is not complete wit err:", err)
 		return 0, err
 	}
 
-	_, err = s.db.ExecContext(ctx,
+	_, err = tx.ExecContext(ctx,
 		"UPDATE Statistic SET Impressions = Impressions + 1 WHERE SlotID=$1 AND BannerID=$2 AND SocGroupID=$3", slotID, selectedBanner, socGroupID)
 	if err != nil {
 		err = tx.Rollback()
-		if err != nil {
-			s.logg.Error("rollback is not complete with err:", err)
-		}
+		s.logg.Error("rollback is not complete with err:", err)
 		return 0, fmt.Errorf("increasing of impressions has got an error: %w", err)
 	}
 	err = tx.Commit()
