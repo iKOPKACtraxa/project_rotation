@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package rotation;
+option go_package = "./;pb";
+
+service Rotation {
+  rpc AddBanner (AddBannerRequest) returns (AddBannerResponse) {}
+  rpc DeleteBanner (DeleteBannerRequest) returns (DeleteBannerResponse) {}
+  rpc ClicksIncreasing (ClicksIncreasingRequest) returns (ClicksIncreasingResponse) {}
+  rpc BannerSelection (BannerSelectionRequest) returns (BannerSelectionResponse) {}
+}
+
+message AddBannerRequest {
+    uint64 bannerID = 1;
+    uint64 slotID = 2;
+}
+message AddBannerResponse {
+}
+
+message DeleteBannerRequest {
+    uint64 bannerID = 1;
+    uint64 slotID = 2;
+}
+message DeleteBannerResponse {
+}
+
+message ClicksIncreasingRequest {
+    uint64 slotID = 1;
+    uint64 bannerID = 2;
+    uint64 socGroupID = 3;
+}
+message ClicksIncreasingResponse {
+}
+
+message BannerSelectionRequest {
+    uint64 slotID = 1;
+    uint64 socGroupID = 2;
+}
+message BannerSelectionResponse {
+    uint64 bannerID = 1;
+}

@@ -1,0 +1,15 @@
+logger:
+  level : "info"  # you can set: errorlevel / warn / info / debug
+  file : "./logs/test.log"
+
+storage:
+  connStr : "host=db user=someuser password=1234 dbname=rotationdb sslmode=disable"
+
+GRPCServer:
+  hostPort : ":50051"
+
+MQ:
+  uri : "amqp://guest:guest@mq:5672/"
+  exchange : "test-exchange"
+  reliable : true
+  routingKey : "test-key"

@@ -1,0 +1,9 @@
+FROM golang:1.16-alpine3.14
+LABEL maintainer="iKOPKACtraxa"
+WORKDIR /app
+COPY . .
+RUN apk add --no-cache make
+RUN apk add --no-cache --update postgresql-client
+RUN apk add --no-cache git
+RUN CGO_ENABLED=0 go get -u github.com/pressly/goose/v3/cmd/goose
+CMD make migrate
